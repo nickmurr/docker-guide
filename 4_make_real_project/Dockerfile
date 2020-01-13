@@ -5,10 +5,12 @@ FROM node:alpine
 WORKDIR /usr/app
 
 # Copy files to WD
-COPY ./ ./
+COPY ./package.json ./
 
 # Running init scripts
 RUN npm install
+
+COPY ./ ./
 RUN npm run build
 
 # Run app
