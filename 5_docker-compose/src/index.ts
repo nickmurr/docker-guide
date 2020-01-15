@@ -1,5 +1,6 @@
 import express from 'express';
 import { createClient } from 'redis';
+import process from 'process';
 
 const app = express();
 
