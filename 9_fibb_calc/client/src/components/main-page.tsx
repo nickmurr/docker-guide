@@ -1,11 +1,11 @@
-import React, { ChangeEvent } from "react";
-import axios from "axios";
+import React, { ChangeEvent } from 'react';
+import axios from 'axios';
 
 const MainPage = () => {
   const [state, setState] = React.useState({
     seenIndexes: [],
-    values: [],
-    value: ""
+    values: {},
+    value: ''
   });
 
   React.useEffect(() => {
@@ -14,34 +14,34 @@ const MainPage = () => {
   }, []);
 
   const fetchValues = async () => {
-    const { data } = await axios.get("/api/values/current");
+    const { data } = await axios.get('/api/values/current');
     setState(p => ({ ...p, values: data }));
   };
 
   const fetchIndexes = async () => {
-    const { data } = await axios.get("/api/values/all");
+    const { data } = await axios.get('/api/values/all');
     setState(p => ({ ...p, seenIndexes: data }));
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     await e.preventDefault();
-    await axios.post("/api/values", { value: state.value });
-    setState(p => ({ ...p, value: "" }));
+    await axios.post('/api/values', { value: state.value });
+    setState(p => ({ ...p, value: '' }));
+    await Promise.all([fetchValues(), fetchIndexes()]);
   };
 
   const renderSeenIndexes = () => {
-    return state.seenIndexes.map((i: any) => i.number).join(", ");
+    return state.seenIndexes.map((i: any) => i.number).join(', ');
   };
 
   const renderValues = () => {
-    const entries = [];
-    for (let key in state.values) {
-      entries.push(
-        <div key={key}>
-          For index {key} i Calculated {state.values[key]}
+    return Object.entries(state.values).map(v => {
+      return (
+        <div key={v[0]}>
+          For index {v[0]} i Calculated {v[1]}
         </div>
       );
-    }
+    });
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
