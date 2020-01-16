@@ -1,0 +1,28 @@
+.container {
+  max-width: 1368px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 2rem;
+  h1 {
+    text-align: center;
+  }
+
+  .links {
+    display: grid;
+    grid-template-columns: repeat(2, 100px);
+    grid-gap: 1rem;
+    a {
+      color: black;
+      text-align: center;
+      padding: 0.3rem;
+      border-radius: 1rem;
+      text-decoration: none;
+      &.active {
+        background-color: black;
+        color: white;
+      }
+    }
+  }
+}
